@@ -26,6 +26,8 @@
 	void LADRC::setPDpara(const float &omega_c)
 	{
 		this->omega_c = omega_c;
+		this->Kp=omega_c*omega;
+		this->kd=2*omega-1;
 	}
 	void LADRC::setupperlimit(const float &out_upper_limit)
 	{
@@ -80,15 +82,15 @@
 		float e1 = 0;
 		float e2 = 0;
 
-		//**********   TD  ************¸ú×ÙÎ¢·ÖÆ÷
+		//**********   TD  ************è·Ÿè¸ªå¾®åˆ†å™¨
 		td_x1 = td_x1 + h*td_x2;                        //td_x1=v1;
 		td_x2 = td_x2 + h*fst(td_x1, td_x2, v);           //td_x2=v2;
-														  //********  leso  *************¹Û²âÆ÷
+														  //********  leso  *************è§‚æµ‹å™¨
 		e = z1 - y;
 		z1 = z1 + h*(z2 - beta01*e);
 		z2 = z2 + h*(z3 - beta02*e + b*last_u);
 		z3 = z3 - h*beta03*e;
-		//***********  PD *************¿ØÖÆÆ÷
+		//***********  PD *************æŽ§åˆ¶å™¨
 		e1 = td_x1 - z1;   				//e1=v1-z1;   
 		e2 = td_x2 - z2;				//e2=v2-z2;
 										//    e1=v-z1;
